@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <title>document wg color</title>
+<meta charset=utf-8>
 <link rel="help" href="https://html.spec.whatwg.org/multipage/obsolete.html#dom-document-fgcolor">
 <link rel="help" href="https://html.spec.whatwg.org/multipage/obsolete.html#dom-document-linkcolor">
 <link rel="help" href="https://html.spec.whatwg.org/multipage/obsolete.html#dom-document-vlinkcolor">
@@ -8,46 +9,28 @@
 <link rel="help" href="https://html.spec.whatwg.org/multipage/obsolete.html">
 <script src="/resources/testharness.js"></script>
 <script src="/resources/testharnessreport.js"></script>
-<body text="red" linkColor="green" vlink="blue" alink="orange" bgColor="yellow">
+<frameset>
+  <frame src = "body-container.html">
+</frameset>
+<iframe id="test" src="body-container.html"></iframe>
 <script>
-test(function() {
-  assert_equals(document.fgColor, document.body.text);
-
-  assert_equals(document.linkColor, document.body.link);
-
-  assert_equals(document.vlinkColor, document.body.vLink);
-
-  assert_equals(document.alinkColor, document.body.aLink);
-
-  assert_equals(document.bgColor, document.body.bgColor);
-})
-test(function() {
-  document.body.text = red;
-
-  assert_equals(document.fgColor, "red");
-}, "document's fgColor IDL attribute reflects the body's text content attribute");
+var doc=document.getElementById("test");
+doc.body.parentNode.removeChild(doc.body);
 
 test(function() {
-  document.body.link = green;
-
-  assert_equals(document.linkColor, "green");
-}, "document's linkColor IDL attribute reflects the body's link content attribute");
-
+  assert_equals(doc.body, null);
+}, "body is gone")
+// Getting Part
 test(function() {
-  document.body.vLink = blue;
+assert_equals(document.fgColor,"");
+assert_equals(document.bgColor,"");
+assert_equals(document.linkColor,"");
+assert_equals(document.vlinkColor,"");
+assert_equals(document.alinkColor,"");
 
-  assert_equals(document.vlinkColor, "blue");
-}, "document's vlinkColor IDL attribute reflects the body's vLink content attribute");
+}, "getting the document color attributes with a frameset")
 
-test(function() {
-  document.body.aLink = orange;
+// Setting Part
+// TODO
 
-  assert_equals(document.alinkColor, "orange");
-}, "document's alinkColor IDL attribute reflects the body's aLink content attribute");
-
-test(function() {
-  document.body.bgColor = yellow;
-
-  assert_equals(document.bgColor, "yellow");
-}, "document's bgColor IDL attribute reflects the body's bgColor content attribute");
 </script>
